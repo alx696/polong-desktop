@@ -1,0 +1,66 @@
+{
+  "name": "po-long",
+  "version": "1.0.1",
+  "license": "ISC",
+  "description": "破笼：去中心化对等网络通信",
+  "homepage": "https://lilu.red/app/pl/",
+  "author": {
+    "name": "李小明",
+    "email": "alx696@gmail.com"
+  },
+  "build": {
+    "appId": "red.lilu.app.pl",
+    "productName": "破笼",
+    "files": [
+      "icon.png",
+      "service",
+      "service.exe",
+      "web/**/*",
+      "main.js"
+    ],
+    "artifactName": "${name}_${version}_${arch}_${os}.${ext}",
+    "linux": {
+      "category": "Network.P2P",
+      "target": [
+        "deb",
+        "rpm"
+      ],
+      "icon": "build/assets",
+      "executableName": "po-long"
+    },
+    "mac": {
+      "category": "public.app-category.social-networking",
+      "target": [
+        "pkg"
+      ],
+      "icon": "build/assets/icon.icns"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerHeaderIcon": "build/assets/icon.ico",
+      "installerIcon": "build/assets/icon.ico",
+      "createDesktopShortcut": true
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/assets/icon.ico",
+      "publisherName": "lilu.red"
+    }
+  },
+  "main": "main.js",
+  "scripts": {
+    "start": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ electron . --debug=1 --dir=/home/m/test/ptp",
+    "dist": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/ electron-builder",
+    "win": "electron-builder --win"
+  },
+  "postinstall": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/ electron-builder install-app-deps",
+  "devDependencies": {
+    "electron": "^12.0.5",
+    "electron-builder": "^22.9.1"
+  },
+  "dependencies": {
+    "electron-log": "^4.3.4",
+    "get-port": "^5.1.1"
+  }
+}
