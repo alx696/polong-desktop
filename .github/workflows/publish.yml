@@ -29,7 +29,7 @@ jobs:
         wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
         echo "下载网页"
         wget https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
-        tar zxf polong-web-${POLONG_WEB_VERSION}.tar.gz
+        tar zxf v${POLONG_WEB_VERSION}.tar.gz
         mv polong-web-${POLONG_WEB_VERSION} web
         echo "打包Linux"
         npm dist
