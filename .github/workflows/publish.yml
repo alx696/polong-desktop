@@ -23,7 +23,7 @@ jobs:
 
     - name: Build
       run: |
-        sudo apt install -y wget
+        sudo apt install -y wget rpm
         echo "下载核心"
         wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
         wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
@@ -36,7 +36,7 @@ jobs:
         npm install -g yarn
         yarn add electron --dev
         yarn add electron-builder --dev
-        yarn dist
+        yarn --verbose && yarn dist
         ls dist
 
     - name: Create release and upload assets

@@ -8,8 +8,6 @@
 
 [参考](https://github.com/alx696/share/wiki/Node)
 
----
-
 #### 安装electron
 
 项目根目录中执行：
