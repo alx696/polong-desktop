@@ -45,4 +45,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        files: 'build/*'
+        files: |
+          'dist/*.deb'
+          'dist/*.rpm'
