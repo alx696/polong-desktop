@@ -59,7 +59,7 @@ jobs:
         tar zxf v${POLONG_WEB_VERSION}.tar.gz
         rm v${POLONG_WEB_VERSION}.tar.gz
         Rename-Item -Path polong-web-${POLONG_WEB_VERSION} -NewName web
-        echo "打包Windows"
+        echo "Package Windows"
         npm install -g yarn
         yarn add electron --dev
         yarn add electron-builder --dev
