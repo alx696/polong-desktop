@@ -13,8 +13,8 @@
     "productName": "破笼",
     "files": [
       "icon.png",
-      "service",
-      "service.exe",
+      "polong-core-linux",
+      "polong-core-windows",
       "web/**/*",
       "main.js"
     ],

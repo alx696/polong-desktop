@@ -2,6 +2,5 @@ node_modules/
 yarn.lock
 dist/
 web/
-service
-service.exe
-package-lock.json
+polong-core-linux
+polong-core-windows

@@ -14,9 +14,9 @@ let serviceProcess = null;
 function startService(dir, ptpPort, webPort) {
   log.info('启动服务:', dir, ptpPort, webPort);
 
-  let serviceName = 'service';
+  let serviceName = 'polong-core-linux';
   if (process.platform === 'win32') {
-    serviceName = 'service.exe';
+    serviceName = 'polong-core-windows';
   }
 
   // 当资源是asar存档形式时, 只支持execFile
