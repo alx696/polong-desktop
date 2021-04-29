@@ -1,6 +1,6 @@
 # 破笼桌面端
 
-破笼桌面端，提供Linux(DEB,RPM)，Windows客户端。
+使用[electron](https://www.electronjs.org/)和[electron-builder](https://www.electron.build/)打包集成后端和界面，提供破笼Linux(DEB,RPM)，Windows客户端。
 
 ### 开发
 
