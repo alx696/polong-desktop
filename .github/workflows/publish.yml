@@ -34,6 +34,8 @@ jobs:
         mv polong-web-${POLONG_WEB_VERSION} web
         echo "打包Linux"
         npm install -g yarn
+        yarn add electron --dev
+        yarn add electron-builder --dev
         yarn dist
         ls dist
 
