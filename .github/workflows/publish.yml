@@ -63,8 +63,9 @@ jobs:
         npm install -g yarn
         yarn add electron --dev
         yarn add electron-builder --dev
-        yarn --verbose && yarn win
-        ls dist
+        yarn --verbose
+        yarn win
+        Get-ChildItem -Path dist
 
   # windows:
   #   container:
