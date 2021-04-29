@@ -30,9 +30,11 @@ jobs:
         echo "下载网页"
         wget https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
         tar zxf v${POLONG_WEB_VERSION}.tar.gz
+        rm v${POLONG_WEB_VERSION}.tar.gz
         mv polong-web-${POLONG_WEB_VERSION} web
         echo "打包Linux"
-        npm dist
+        npm install -g yarn
+        yarn dist
         ls dist
 
     - name: Create release and upload assets
