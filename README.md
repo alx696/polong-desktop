@@ -14,7 +14,14 @@
 
 项目根目录中执行：
 ```
-$ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ npm install --save-dev electron
+$ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ yarn add electron --dev
+```
+
+#### 安装electron-builder
+
+项目根目录中执行：
+```
+$ ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/ yarn add electron-builder --dev
 ```
 
 #### 加载依赖
@@ -34,13 +41,6 @@ $ npm start
 > 需要在项目根目录中放置服务程序`service`和`service.exe`，来自[破笼核心](https://github.com/alx696/polong-core)。`web`目录，来自[破笼Web](https://github.com/alx696/polong-web)!
 
 ---
-
-#### 安装electron-builder
-
-项目根目录中执行：
-```
-$ yarn add electron-builder --dev
-```
 
 #### 使用electron-builder打包
 
