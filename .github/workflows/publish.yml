@@ -16,14 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: electronuserland/builder:wine-mono
-      options: --user root
     steps:
       - uses: actions/checkout@v2
       
       - name: Build
         run: |
-          ls
-          echo $USER
+          echo $HOME
+          mkdir -p /github/home
           echo "下载核心"
           wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
           wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
