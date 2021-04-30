@@ -12,47 +12,45 @@ env:
 
 jobs:
 
-  build_windows:
-    container:
-      image: electronuserland/builder:wine-mono
-      env:
-        ELECTRON_CACHE: "/root/.cache/electron"
-        ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
-        DEBUG: "electron-builder,electron-builder:*"
-      volumes:
-        - ./:/project
-        - ./node-modules:/project/node_modules
-      steps:
-        - name: Build
-          run: |
-            /bin/bash -c "yarn --verbose && yarn win"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 14
 
-  #   - uses: actions/setup-node@v2
-  #     with:
-  #       node-version: 14
-
-  #   - name: Build
-  #     run: |
-  #       sudo apt install -y wget rpm
-  #       echo "下载核心"
-  #       wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
-  #       wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
-  #       echo "下载网页"
-  #       wget https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
-  #       tar zxf v${POLONG_WEB_VERSION}.tar.gz
-  #       rm v${POLONG_WEB_VERSION}.tar.gz
-  #       mv polong-web-${POLONG_WEB_VERSION} web
-  #       echo "打包Linux"
-  #       npm install -g yarn
-  #       yarn add electron --dev
-  #       yarn add electron-builder --dev
-  #       yarn --verbose && yarn dist
-  #       ls dist
+    - name: Build
+      run: |
+        sudo apt install -y wget rpm
+        echo "下载核心"
+        wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
+        wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
+        echo "下载网页"
+        wget https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
+        tar zxf v${POLONG_WEB_VERSION}.tar.gz
+        rm v${POLONG_WEB_VERSION}.tar.gz
+        mv polong-web-${POLONG_WEB_VERSION} web
+        echo "打包Linux"
+        npm install -g yarn
+        yarn add electron --dev
+        yarn add electron-builder --dev
+        yarn --verbose && yarn dist
+        ls dist
+        echo "打包Windows"
+        docker run -it --rm \
+        --env ELECTRON_CACHE="/root/.cache/electron" \
+        --env ELECTRON_MIRROR="http://npm.taobao.org/mirrors/electron/" \
+        --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
+        --env ELECTRON_BUILDER_BINARIES_MIRROR="http://npm.taobao.org/mirrors/electron-builder-binaries/" \
+        --env DEBUG="electron-builder,electron-builder:*" \
+        -v ${PWD}:/project \
+        -v ${PWD##*/}-node-modules:/project/node_modules \
+        -v ~/.cache/electron:/root/.cache/electron \
+        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+        -v ~/.cache/yarn:/usr/local/share/.cache/yarn \
+        electronuserland/builder:wine-mono /bin/bash -c "yarn --verbose && yarn win"
 
   # build:
   #   runs-on: windows-latest
