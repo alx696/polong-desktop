@@ -40,16 +40,16 @@ jobs:
     - uses: docker-practice/actions-setup-docker@master
     
     - name: Build Windows
-      run: |
-        docker run -it --rm \
-        --env ELECTRON_CACHE="/root/.cache/electron" \
-        --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
-        --env DEBUG="electron-builder,electron-builder:*" \
-        -v ${PWD}:/project \
-        -v ${PWD##*/}-node-modules:/project/node_modules \
-        -v ~/.cache/electron:/root/.cache/electron \
-        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        -v ~/.cache/yarn:/usr/local/share/.cache/yarn \
+      run: >
+        docker run -it --rm
+        --env ELECTRON_CACHE="/root/.cache/electron"
+        --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder"
+        --env DEBUG="electron-builder,electron-builder:*"
+        -v ${PWD}:/project
+        -v ${PWD##*/}-node-modules:/project/node_modules
+        -v ~/.cache/electron:/root/.cache/electron
+        -v ~/.cache/electron-builder:/root/.cache/electron-builder
+        -v ~/.cache/yarn:/usr/local/share/.cache/yarn
         electronuserland/builder:wine-mono /bin/bash -c "yarn --verbose && yarn win"
 
   # build:
