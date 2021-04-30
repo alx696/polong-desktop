@@ -12,6 +12,21 @@ env:
 
 jobs:
 
+  build_windows:
+    container:
+      image: electronuserland/builder:wine-mono
+      env:
+        ELECTRON_CACHE: "/root/.cache/electron"
+        ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
+        DEBUG: "electron-builder,electron-builder:*"
+      volumes:
+        - ./:/project
+        - ./node-modules:/project/node_modules
+      steps:
+        - name: Build
+          run: |
+            /bin/bash -c "yarn --verbose && yarn win"
+
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -84,21 +99,6 @@ jobs:
   #       - name: Build
   #         run: |
   #           /bin/bash -c "yarn --verbose && yarn win"
-
-  windows:
-    container:
-      image: electronuserland/builder:wine-mono
-      env:
-        ELECTRON_CACHE: "/root/.cache/electron"
-        ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
-        DEBUG: "electron-builder,electron-builder:*"
-      volumes:
-        - ./:/project
-        - ./node-modules:/project/node_modules
-      steps:
-        - name: Build
-          run: |
-            /bin/bash -c "yarn --verbose && yarn win"
 
 ###
 
