@@ -16,11 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: electronuserland/builder:wine-mono
-      env:
-        HOME: "/root"
-        ELECTRON_CACHE: "/root/.cache/electron"
-        ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
-        DEBUG: "electron-builder,electron-builder:*"
+      options: --user root
     steps:
       - uses: actions/checkout@v2
       
