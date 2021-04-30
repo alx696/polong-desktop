@@ -17,6 +17,8 @@ jobs:
     container:
       image: electronuserland/builder:wine-mono
       env:
+        ELECTRON_CACHE: "/root/.cache/electron"
+        ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
         DEBUG: "electron-builder,electron-builder:*"
     steps:
       - uses: actions/checkout@v2
