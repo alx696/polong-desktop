@@ -52,13 +52,13 @@ jobs:
       shell: powershell
       run: |
         echo "下载核心"
-        wget -Uri https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
-        wget -Uri https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
+        wget -Uri https://github.com/alx696/polong-core/releases/download/$POLONG_CORE_TAG/polong-core-linux
+        wget -Uri https://github.com/alx696/polong-core/releases/download/$POLONG_CORE_TAG/polong-core-windows
         echo "下载网页"
-        wget -Uri https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
-        tar zxf v${POLONG_WEB_VERSION}.tar.gz
-        rm v${POLONG_WEB_VERSION}.tar.gz
-        Rename-Item -Path polong-web-${POLONG_WEB_VERSION} -NewName web
+        wget -Uri https://github.com/alx696/polong-web/archive/refs/tags/v$POLONG_WEB_VERSION.tar.gz
+        tar zxf v$POLONG_WEB_VERSION.tar.gz
+        rm v$POLONG_WEB_VERSION.tar.gz
+        Rename-Item -Path polong-web-$POLONG_WEB_VERSION -NewName web
         echo "Package Windows"
         npm install -g yarn
         yarn add electron --dev
