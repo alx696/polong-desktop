@@ -20,6 +20,9 @@ jobs:
         ELECTRON_CACHE: "/root/.cache/electron"
         ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
         DEBUG: "electron-builder,electron-builder:*"
+      volumes:
+        - ./:/project
+        - ./node-modules:/project/node_modules
     steps:
       - uses: actions/checkout@v2
       
