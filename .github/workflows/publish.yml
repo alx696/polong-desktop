@@ -26,6 +26,8 @@ jobs:
       
       - name: Build
         run: |
+          ls
+          echo $USER
           echo "下载核心"
           wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
           wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
