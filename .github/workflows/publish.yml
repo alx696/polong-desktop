@@ -12,45 +12,68 @@ env:
 
 jobs:
 
-  build:
+  windows:
     runs-on: ubuntu-latest
+    container:
+      image: electronuserland/builder:wine-mono
+      env:
+        DEBUG: "electron-builder,electron-builder:*"
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      
+      - name: Build
+        run: |
+          echo "下载核心"
+          wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
+          wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
+          echo "下载网页"
+          wget https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
+          tar zxf v${POLONG_WEB_VERSION}.tar.gz
+          rm v${POLONG_WEB_VERSION}.tar.gz
+          mv polong-web-${POLONG_WEB_VERSION} web
+          npm install -g yarn
+          yarn add electron --dev
+          yarn add electron-builder --dev
+          yarn --verbose && yarn win
 
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 14
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
 
-    - name: Build
-      run: |
-        sudo apt install -y wget rpm
-        echo "下载核心"
-        wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
-        wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
-        echo "下载网页"
-        wget https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
-        tar zxf v${POLONG_WEB_VERSION}.tar.gz
-        rm v${POLONG_WEB_VERSION}.tar.gz
-        mv polong-web-${POLONG_WEB_VERSION} web
-        echo "打包Linux"
-        npm install -g yarn
-        yarn add electron --dev
-        yarn add electron-builder --dev
+#     - uses: actions/setup-node@v2
+#       with:
+#         node-version: 14
+
+#     - name: Build
+#       run: |
+#         sudo apt install -y wget rpm
+#         echo "下载核心"
+#         wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-linux
+#         wget https://github.com/alx696/polong-core/releases/download/${POLONG_CORE_TAG}/polong-core-windows
+#         echo "下载网页"
+#         wget https://github.com/alx696/polong-web/archive/refs/tags/v${POLONG_WEB_VERSION}.tar.gz
+#         tar zxf v${POLONG_WEB_VERSION}.tar.gz
+#         rm v${POLONG_WEB_VERSION}.tar.gz
+#         mv polong-web-${POLONG_WEB_VERSION} web
+#         echo "打包Linux"
+#         npm install -g yarn
+#         yarn add electron --dev
+#         yarn add electron-builder --dev
         
-    - uses: docker-practice/actions-setup-docker@master
-    
-    - name: Build Windows
-      run: >
-        docker run -it --rm
-        --env ELECTRON_CACHE="/root/.cache/electron"
-        --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder"
-        --env DEBUG="electron-builder,electron-builder:*"
-        -v ${PWD}:/project
-        -v ${PWD##*/}-node-modules:/project/node_modules
-        -v ~/.cache/electron:/root/.cache/electron
-        -v ~/.cache/electron-builder:/root/.cache/electron-builder
-        -v ~/.cache/yarn:/usr/local/share/.cache/yarn
-        electronuserland/builder:wine-mono /bin/bash -c "yarn --verbose && yarn win"
+#     - uses: docker-practice/actions-setup-docker@master
+#     - name: Build Windows
+#       run: >
+#         docker run -it --rm
+#         --env ELECTRON_CACHE="/root/.cache/electron"
+#         --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder"
+#         --env DEBUG="electron-builder,electron-builder:*"
+#         -v ${PWD}:/project
+#         -v ${PWD##*/}-node-modules:/project/node_modules
+#         -v ~/.cache/electron:/root/.cache/electron
+#         -v ~/.cache/electron-builder:/root/.cache/electron-builder
+#         -v ~/.cache/yarn:/usr/local/share/.cache/yarn
+#         electronuserland/builder:wine-mono /bin/bash -c "yarn --verbose && yarn win"
 
   # build:
   #   runs-on: windows-latest
@@ -80,23 +103,7 @@ jobs:
   #       yarn win
   #       Get-ChildItem -Path dist
 
-  # windows:
-  #   container:
-  #     image: electronuserland/builder:wine-mono
-  #     env:
-  #       ELECTRON_CACHE: "/root/.cache/electron"
-  #       ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
-  #       DEBUG: "electron-builder,electron-builder:*"
-  #     volumes:
-  #       - ./:/project
-  #       - ./node-modules:/project/node_modules
-  #       - ~/.cache/electron:/root/.cache/electron
-  #       - ~/.cache/electron-builder:/root/.cache/electron-builder
-  #       - ~/.cache/yarn:/usr/local/share/.cache/yarn
-  #     steps:
-  #       - name: Build
-  #         run: |
-  #           /bin/bash -c "yarn --verbose && yarn win"
+
 
 ###
 
