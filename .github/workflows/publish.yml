@@ -36,14 +36,14 @@ jobs:
         npm install -g yarn
         yarn add electron --dev
         yarn add electron-builder --dev
-        yarn --verbose && yarn dist
-        ls dist
-        echo "打包Windows"
+        
+    - uses: docker-practice/actions-setup-docker@master
+    
+    - name: Build Windows
+      run: |
         docker run -it --rm \
         --env ELECTRON_CACHE="/root/.cache/electron" \
-        --env ELECTRON_MIRROR="http://npm.taobao.org/mirrors/electron/" \
         --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
-        --env ELECTRON_BUILDER_BINARIES_MIRROR="http://npm.taobao.org/mirrors/electron-builder-binaries/" \
         --env DEBUG="electron-builder,electron-builder:*" \
         -v ${PWD}:/project \
         -v ${PWD##*/}-node-modules:/project/node_modules \
