@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: electronuserland/builder:wine-mono
+      options: --user 1001
     steps:
       - uses: actions/checkout@v2
       
