@@ -26,6 +26,8 @@ $ ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builde
 
 项目根目录中执行：
 ```
+$ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
+$ ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
 $ yarn --verbose
 ```
 > 首次执行时要相当长的时间，会一直停在`[-/2] waiting...`. 直到生成了yarn.lock文件, 才算完成.
@@ -49,6 +51,8 @@ $ npm test
 
 项目根目录中执行：
 ```
+$ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
+$ ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
 $ sudo apt install -y rpm
 $ yarn --verbose && yarn linux
 ```

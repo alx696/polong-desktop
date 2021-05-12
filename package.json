@@ -1,5 +1,5 @@
 {
-  "name": "po-long",
+  "name": "polong",
   "version": "1.0.0",
   "license": "ISC",
   "description": "破笼：去中心化对等网络通信",
@@ -54,7 +54,6 @@
     "linux": "electron-builder",
     "win": "electron-builder --win"
   },
-  "postinstall": "electron-builder install-app-deps",
   "devDependencies": {
     "electron": "^12.0.7",
     "electron-builder": "^22.11.3"
