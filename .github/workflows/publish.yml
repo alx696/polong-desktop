@@ -34,7 +34,7 @@ jobs:
           yarn add electron --dev
           yarn add electron-builder --dev
           yarn --verbose && yarn win
-          yarn dist
+          yarn linux
           ls dist
 
       - name: Create release and upload assets

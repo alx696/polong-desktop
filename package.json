@@ -50,8 +50,8 @@
   },
   "main": "main.js",
   "scripts": {
-    "start": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ electron . --debug=1 --dir=/home/m/test/ptp",
-    "dist": "electron-builder",
+    "test": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ electron . --debug=1 --dir=/home/m/test/ptp",
+    "linux": "electron-builder",
     "win": "electron-builder --win"
   },
   "postinstall": "electron-builder install-app-deps",

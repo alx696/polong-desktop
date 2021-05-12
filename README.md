@@ -34,9 +34,9 @@ $ yarn --verbose
 
 项目根目录中执行：
 ```
-$ npm start
+$ npm test
 ```
-> 需要在项目根目录中放置服务程序`service`和`service.exe`，来自[破笼核心](https://github.com/alx696/polong-core)。`web`目录，来自[破笼Web](https://github.com/alx696/polong-web)!
+> 需要在项目根目录中放置，来自[破笼核心](https://github.com/alx696/polong-core)的服务`polong-core-linux`和`polong-core-windows`，以及来自[破笼Web](https://github.com/alx696/polong-web)的网页`web`!
 
 ---
 
@@ -50,7 +50,7 @@ $ npm start
 项目根目录中执行：
 ```
 $ sudo apt install -y rpm
-$ yarn --verbose && yarn dist
+$ yarn --verbose && yarn linux
 ```
 > [参考](https://www.electron.build/#quick-setup-guide)
 
