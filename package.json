@@ -1,6 +1,6 @@
 {
   "name": "po-long",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "license": "ISC",
   "description": "破笼：去中心化对等网络通信",
   "homepage": "https://lilu.red/app/pl/",
@@ -9,7 +9,7 @@
     "email": "alx696@gmail.com"
   },
   "build": {
-    "appId": "red.lilu.app.pl",
+    "appId": "red.lilu.app.polong",
     "productName": "破笼",
     "files": [
       "icon.png",
@@ -56,8 +56,8 @@
   },
   "postinstall": "electron-builder install-app-deps",
   "devDependencies": {
-    "electron": "^12.0.5",
-    "electron-builder": "^22.10.4"
+    "electron": "^12.0.7",
+    "electron-builder": "^22.11.3"
   },
   "dependencies": {
     "electron-log": "^4.3.4",
