@@ -1,9 +1,10 @@
 name: Publish
 
 on:
-  push:
-    tags:
-      - 'v*'
+  push
+  # push:
+  #   tags:
+  #     - 'v*'
 
 env:
   POLONG_CORE_TAG: v1.0.0
@@ -33,7 +34,8 @@ jobs:
           npm install -g yarn
           yarn add electron --dev
           yarn add electron-builder@22.9.1 --dev
-          yarn --verbose && yarn win
+          yarn --verbose
+          yarn win
           yarn linux
           ls dist
 
