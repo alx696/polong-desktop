@@ -51,8 +51,8 @@
   "main": "main.js",
   "scripts": {
     "test": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ electron . --debug=1 --dir=/home/m/test/ptp",
-    "linux": "electron-builder",
-    "win": "electron-builder --win"
+    "linux": "electron-builder --publish=never",
+    "win": "electron-builder --publish=never --win"
   },
   "devDependencies": {
     "electron": "^12.0.7",
