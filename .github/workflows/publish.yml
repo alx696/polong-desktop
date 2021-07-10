@@ -38,14 +38,13 @@ jobs:
           yarn --verbose
           yarn win
           yarn linux
-          ls dist
 
       - name: Test
-        run: ls
+        run: ls dist
 
       - name: Publish
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
