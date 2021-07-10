@@ -48,6 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
+          # 多个文件时不要引号！
           files: |
             dist/polong.deb
             dist/polong.rpm
