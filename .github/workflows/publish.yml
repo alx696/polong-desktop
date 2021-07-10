@@ -1,9 +1,11 @@
-name: Publish
+name: CI
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [ main ]
+  # push:
+  #   tags:
+  #     - 'v*'
 
 env:
   POLONG_CORE_TAG: v1.0.1
