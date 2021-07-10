@@ -49,6 +49,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           files: |
-            'dist/polong.deb'
-            'dist/polong.rpm'
-            'dist/polong.exe'
+            dist/polong.deb
+            dist/polong.rpm
+            dist/polong.exe
