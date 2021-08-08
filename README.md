@@ -40,7 +40,7 @@ $ yarn --verbose
 ```
 $ npm test
 ```
-> 需要在项目根目录中放置，来自[破笼核心](https://github.com/alx696/polong-core)的服务`polong-core-linux`和`polong-core-windows`，以及来自[破笼Web](https://github.com/alx696/polong-web)的网页`web`!
+> 需要在项目根目录中放置来自[破笼核心](https://github.com/alx696/polong-core) 的服务`polong-core-linux`和`polong-core-windows`，以及来自 [破笼Web](https://github.com/alx696/polong-web) 的网页`web`!
 
 ---
 
