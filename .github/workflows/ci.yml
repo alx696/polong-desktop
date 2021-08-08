@@ -32,9 +32,10 @@ jobs:
           tar zxf v${POLONG_WEB_VERSION}.tar.gz
           rm v${POLONG_WEB_VERSION}.tar.gz
           mv polong-web-${POLONG_WEB_VERSION} web
+          echo "编译程序"
           npm install -g yarn
           yarn add electron --dev
-          yarn add electron-builder@22.9.1 --dev
+          yarn add electron-builder --dev
           yarn --verbose
           yarn win
           yarn linux
