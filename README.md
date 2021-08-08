@@ -12,25 +12,25 @@
 
 项目根目录中执行：
 ```
-$ export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
-$ yarn add electron --dev
+export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
+yarn add electron --dev
 ```
 
 #### 安装electron-builder
 
 项目根目录中执行：
 ```
-$ export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
-$ yarn add electron-builder --dev
+export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
+yarn add electron-builder --dev
 ```
 
 #### 加载依赖
 
 项目根目录中执行：
 ```
-$ export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
-$ export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
-$ yarn --verbose
+export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
+export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
+yarn --verbose
 ```
 > 首次执行时要相当长的时间，会一直停在`[-/2] waiting...`. 直到生成了yarn.lock文件, 才算完成.
 
@@ -38,7 +38,7 @@ $ yarn --verbose
 
 项目根目录中执行：
 ```
-$ npm test
+npm test
 ```
 > 需要在项目根目录中放置来自[破笼核心](https://github.com/alx696/polong-core) 的服务`polong-core-linux`和`polong-core-windows`，以及来自 [破笼Web](https://github.com/alx696/polong-web) 的网页`web`!
 
@@ -53,10 +53,10 @@ $ npm test
 
 项目根目录中执行：
 ```
-$ export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
-$ export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
-$ sudo apt install -y rpm
-$ yarn --verbose && yarn linux
+export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
+export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
+sudo apt install -y rpm
+yarn --verbose && yarn linux
 ```
 > [参考](https://www.electron.build/#quick-setup-guide)
 

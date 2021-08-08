@@ -9,13 +9,15 @@
     "email": "alx696@gmail.com"
   },
   "build": {
-    "appId": "red.lilu.app.polong",
+    "appId": "red.lilu.app.pl",
     "productName": "破笼",
-    "files": [
-      "icon.png",
+    "extraResources": [
       "polong-core-linux",
       "polong-core-windows",
-      "web/**/*",
+      "web/**/*"
+    ],
+    "files": [
+      "icon.png",
       "main.js"
     ],
     "artifactName": "${name}.${ext}",
@@ -50,7 +52,7 @@
   },
   "main": "main.js",
   "scripts": {
-    "test": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ electron . --debug=1 --dir=/home/m/test/ptp",
+    "test": "ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/ electron . --test=1 --debug=1 --dir=/home/m/test/ptp",
     "linux": "electron-builder --publish=never",
     "win": "electron-builder --publish=never --win"
   },

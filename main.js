@@ -3,7 +3,7 @@ const { app, Menu, BrowserWindow, dialog } = require('electron');
 // https://nodejs.org/api/path.html
 const path = require('path');
 // https://nodejs.org/api/child_process.html
-const { execFile } = require("child_process");
+const { exec } = require("child_process");
 // https://www.npmjs.com/package/get-port
 const getPort = require('get-port');
 // https://github.com/megahertz/electron-log
@@ -11,31 +11,31 @@ const log = require('electron-log');
 
 let serviceProcess = null;
 
-function startService(dir, ptpPort, webPort) {
-  log.info('启动服务:', dir, ptpPort, webPort);
+function startService(resourcesPath, dir, ptpPort, webPort) {
+  log.info(`启动后台服务参数( 资源目录:${resourcesPath} 文件目录:${dir} 服务端口:${ptpPort} 网页端口:${webPort} )`);
 
   let serviceName = 'polong-core-linux';
   if (process.platform === 'win32') {
     serviceName = 'polong-core-windows';
   }
+  const servicePath = path.join(resourcesPath, serviceName);
+  log.info(`后台服务文件路径: ${servicePath}`);
 
-  // 当资源是asar存档形式时, 只支持execFile
-  // https://www.electronjs.org/docs/tutorial/application-packaging#extra-unpacking-on-some-apis
-  serviceProcess = execFile(
-    path.join(app.getAppPath(), serviceName),
-    [
-      `--safe-directory=${dir}`,
-      `--file-directory=${dir}`,
-      `--p2p-port=${ptpPort}`,
-      `--web-port=${webPort}`
-    ],
+  serviceProcess = exec(
+    `${servicePath} --safe-directory=${dir} --file-directory=${dir} --p2p-port=${ptpPort} --web-port=${webPort}`,
     (error, stdout, stderr) => {
       if (error) {
-        log.error('服务运行日志:', error);
+        log.error(error);
         dialog.showErrorBox('服务运行错误', error.message);
         return;
       }
-      log.info('服务运行日志:', stdout, stderr);
+
+      if(stdout) {
+        log.debug(stdout);
+        return;
+      }
+
+      log.warn(stderr);
     }
   );
 }
@@ -102,6 +102,12 @@ function createWindow() {
     }
   });
 
+  //确定资源目录
+  let resourcesPath = process.resourcesPath;
+  if (app.commandLine.getSwitchValue("test") !== '') {
+    resourcesPath = app.getAppPath();
+  }
+
   //获取数据目录参数
   const argDir = app.commandLine.getSwitchValue("dir");
 
@@ -111,19 +117,19 @@ function createWindow() {
     getPort()
   ])
     .then(values => {
-      console.debug('可用端口', values);
+      log.debug(`资源目录: ${resourcesPath}, 可用端口: ${values}`);
 
       //启动服务,关闭窗口时关闭服务
-      startService(argDir, values[0], values[1]);
+      startService(resourcesPath, argDir, values[0], values[1]);
       win.on('closed', () => {
         stopService();
       });
 
       //显示网页
-      win.loadFile('web/1.html', { query: { "port": values[1], "version": app.getVersion() } });
+      win.loadFile(`${resourcesPath}/web/1.html`, { query: { "port": values[1], "version": app.getVersion() } });
     })
     .catch(error => {
-      console.error('没有可用端口', error);
+      log.error(error);
       dialog.showErrorBox('启动失败', '没有可用端口');
     });
 }
