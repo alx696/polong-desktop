@@ -3,7 +3,7 @@ const { app, Menu, BrowserWindow, dialog } = require('electron');
 // https://nodejs.org/api/path.html
 const path = require('path');
 // https://nodejs.org/api/child_process.html
-const { exec } = require("child_process");
+const { execFile } = require("child_process");
 // https://www.npmjs.com/package/get-port
 const getPort = require('get-port');
 // https://github.com/megahertz/electron-log
@@ -21,8 +21,14 @@ function startService(resourcesPath, dir, ptpPort, webPort) {
   const servicePath = path.join(resourcesPath, serviceName);
   log.info(`后台服务文件路径: ${servicePath}`);
 
-  serviceProcess = exec(
-    `${servicePath} --safe-directory=${dir} --file-directory=${dir} --p2p-port=${ptpPort} --web-port=${webPort}`,
+  serviceProcess = execFile(
+    servicePath,
+    [
+      `--safe-directory=${dir}`,
+      `--file-directory=${dir}`,
+      `--p2p-port=${ptpPort}`,
+      `--web-port=${webPort}`
+    ],
     (error, stdout, stderr) => {
       if (error) {
         log.error(error);
@@ -38,15 +44,7 @@ function startService(resourcesPath, dir, ptpPort, webPort) {
       log.warn(stderr);
     }
   );
-}
-
-function stopService() {
-  log.info('停止服务');
-  if (serviceProcess === null) {
-    return;
-  }
-
-  serviceProcess.kill();
+  log.debug('后台服务进程', serviceProcess.pid);
 }
 
 function createWindow() {
@@ -121,9 +119,9 @@ function createWindow() {
 
       //启动服务,关闭窗口时关闭服务
       startService(resourcesPath, argDir, values[0], values[1]);
-      win.on('closed', () => {
-        stopService();
-      });
+      // win.on('closed', () => {
+      //   stopService();
+      // });
 
       //显示网页
       win.loadFile(`${resourcesPath}/web/1.html`, { query: { "port": values[1], "version": app.getVersion() } });
@@ -132,29 +130,46 @@ function createWindow() {
       log.error(error);
       dialog.showErrorBox('启动失败', '没有可用端口');
     });
+
+  return win;
 }
 
 // 设置Windows Application User Model ID
 app.setAppUserModelId('red.lilu.app.pl');
 
-// 只允许启动一个实例
-app.requestSingleInstanceLock();
+app.on('before-quit', function() {
+  log.info('结束进程');
+  serviceProcess.kill();
+});
 
 // quit application when all windows are closed
 app.on('window-all-closed', () => {
+  log.info('退出应用');
+  app.requestSingleInstanceLock();
+
   // on macOS it is common for applications to stay open until the user explicitly quits
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+// 只允许启动一个实例
+let myWindow = null;
+if (!app.requestSingleInstanceLock()) {
+  app.quit();
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // 当运行第二个实例时,将会聚焦到myWindow这个窗口
+    if (myWindow) {
+      if (myWindow.isMinimized()) {
+        myWindow.restore();
+      }
+      myWindow.focus();
+    }
+  })
 
-// create main BrowserWindow when electron is ready
-app.on('ready', () => {
-  createWindow();
-});
+  // 创建 myWindow, 加载应用的其余部分, etc...
+  app.whenReady().then(() => {
+    myWindow = createWindow();
+  })
+}
