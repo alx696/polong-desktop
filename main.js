@@ -1,5 +1,5 @@
 // https://www.electronjs.org/
-const { app, Menu, BrowserWindow, dialog } = require('electron');
+const { app, Menu, BrowserWindow, dialog, ipcMain, shell } = require('electron');
 // https://nodejs.org/api/path.html
 const path = require('path');
 // https://nodejs.org/api/child_process.html
@@ -8,6 +8,12 @@ const { execFile } = require("child_process");
 const getPort = require('get-port');
 // https://github.com/megahertz/electron-log
 const log = require('electron-log');
+
+// 响应中间人 preload.js 事件
+ipcMain.handle('open-path', async (evt, arg) => {
+  log.debug('打开文件', arg);
+  return await shell.openPath(arg);
+});
 
 let serviceProcess = null;
 
@@ -36,7 +42,7 @@ function startService(resourcesPath, dir, ptpPort, webPort) {
         return;
       }
 
-      if(stdout) {
+      if (stdout) {
         log.debug(stdout);
         return;
       }
@@ -51,6 +57,12 @@ function createWindow() {
   //去除菜单
   Menu.setApplicationMenu(null);
 
+  //确定资源目录
+  let resourcesPath = process.resourcesPath;
+  if (app.commandLine.getSwitchValue("test") !== '') {
+    resourcesPath = app.getAppPath();
+  }
+
   // https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions
   const win = new BrowserWindow({
     useContentSize: true,
@@ -60,8 +72,8 @@ function createWindow() {
     minHeight: 800,
     icon: path.join(app.getAppPath(), 'icon.png'),
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: true
+      contextIsolation: true,
+      preload: path.join(resourcesPath, "preload.js")
     },
     show: false // https://www.electronjs.org/docs/api/browser-window#%E4%BD%BF%E7%94%A8ready-to-show%E4%BA%8B%E4%BB%B6
   });
@@ -100,12 +112,6 @@ function createWindow() {
     }
   });
 
-  //确定资源目录
-  let resourcesPath = process.resourcesPath;
-  if (app.commandLine.getSwitchValue("test") !== '') {
-    resourcesPath = app.getAppPath();
-  }
-
   //获取数据目录参数
   const argDir = app.commandLine.getSwitchValue("dir");
 
@@ -137,7 +143,7 @@ function createWindow() {
 // 设置Windows Application User Model ID
 app.setAppUserModelId('red.lilu.app.pl');
 
-app.on('before-quit', function() {
+app.on('before-quit', function () {
   log.info('结束进程');
   serviceProcess.kill();
 });

@@ -14,7 +14,8 @@
     "extraResources": [
       "polong-core-linux",
       "polong-core-windows",
-      "web/**/*"
+      "web/**/*",
+      "preload.js"
     ],
     "files": [
       "icon.png",
