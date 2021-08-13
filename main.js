@@ -14,6 +14,10 @@ ipcMain.handle('open-path', async (evt, arg) => {
   log.debug('打开文件', arg);
   return await shell.openPath(arg);
 });
+ipcMain.on('app-show', (evt, arg) => {
+  log.debug('显示应用');
+  myWindow.show();
+});
 
 let serviceProcess = null;
 
