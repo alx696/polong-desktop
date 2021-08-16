@@ -48,6 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
+          apt-get update
           apt-get install -y jq
           GIT_TAG=`echo $GITHUB_REF | sed 's/refs\/tags\///'`
           upload_url=`curl \
