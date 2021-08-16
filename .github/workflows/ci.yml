@@ -51,10 +51,11 @@ jobs:
           apt-get update
           apt-get install -y jq
           GIT_TAG=`echo $GITHUB_REF | sed 's/refs\/tags\///'`
-          upload_url=`curl \
+          # get upload url
+          API_UPLOAD_URL=`curl \
           -X POST \
-          -H "Authorization: token ${GITHUB_TOKEN}" \
           -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${GITHUB_TOKEN}" \
           https://api.github.com/repos/${GITHUB_REPOSITORY}/releases \
           -d '{"tag_name":"'${GIT_TAG}'"}' \
           | jq --raw-output '.upload_url' \
@@ -62,21 +63,24 @@ jobs:
           # upload
           curl \
           -X POST \
-          -H "Authorization: token ${GITHUB_TOKEN}" \
           -H "Accept: application/vnd.github.v3+json" \
-          -F 'file=@dist/polong.deb' \
-          ${upload_url}=polong.deb
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Content-Type: application/octet-stream" \
+          --data-binary @'dist/polong.deb' \
+          ${API_UPLOAD_URL}=polong.deb
           # upload
           curl \
           -X POST \
-          -H "Authorization: token ${GITHUB_TOKEN}" \
           -H "Accept: application/vnd.github.v3+json" \
-          -F 'file=@dist/polong.rpm' \
-          ${upload_url}=polong.rpm
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Content-Type: application/octet-stream" \
+          --data-binary @'dist/polong.rpm' \
+          ${API_UPLOAD_URL}=polong.rpm
           # upload
           curl \
           -X POST \
-          -H "Authorization: token ${GITHUB_TOKEN}" \
           -H "Accept: application/vnd.github.v3+json" \
-          -F 'file=@dist/polong.exe' \
-          ${upload_url}=polong.exe
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Content-Type: application/octet-stream" \
+          --data-binary @'dist/polong.exe' \
+          ${API_UPLOAD_URL}=polong.exe
