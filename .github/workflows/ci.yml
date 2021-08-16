@@ -44,14 +44,38 @@ jobs:
       - name: Test
         run: ls dist
 
-      - name: Publish
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Upload
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        with:
-          # 多个文件时不要引号！
-          files: |
-            dist/polong.deb
-            dist/polong.rpm
-            dist/polong.exe
+        run: |
+          sudo apt-get install -y jq
+          GIT_TAG=`echo $GITHUB_REF | sed 's/refs\/tags\///'`
+          upload_url=`curl \
+          -X POST \
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${GITHUB_REPOSITORY}/releases \
+          -d '{"tag_name":"'${GIT_TAG}'"}' \
+          | jq --raw-output '.upload_url' \
+          | sed 's/{?name,label}/?name/'`
+          # upload
+          curl \
+          -X POST \
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -F 'file=@dist/polong.deb' \
+          ${upload_url}=polong.deb
+          # upload
+          curl \
+          -X POST \
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -F 'file=@dist/polong.rpm' \
+          ${upload_url}=polong.rpm
+          # upload
+          curl \
+          -X POST \
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -F 'file=@dist/polong.exe' \
+          ${upload_url}=polong.exe
