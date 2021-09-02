@@ -48,6 +48,8 @@ npm test
 
 ##### Linux
 
+注意: Debian中, 使用默认配置打的deb包在安装时会提示缺少依赖 `libappindicator3-1` , [参考默认配置](https://www.electron.build/configuration/linux#debian-package-options) 及 [配置示例](https://github.com/hiqua/Signal-Desktop/blob/d240b21d79fe19fb94f5287dd821179b32aa4223/package.json#L340) , 在package.json中明确 `depends` 为 `["libnotify4", "libxtst6", "libnss3"]` 可以解决依赖问题. 另外一个问题时安装完毕之后会提示 `/var/lib/dpkg/info/polong.postinst:行10: update-desktop-database：未找到命令` 好像也不影响使用, [没有找到解决方法](https://github.com/signalapp/Signal-Desktop/issues/3694) , 只能安装前手动安装支持命令的包 `apt-cache search update-desktop-database` .
+
 [下载镜像 fpm-1.9.3-2.3.1-linux-x86_64.7z](https://xm.lilu.red:444/soft/fpm-1.9.3-2.3.1-linux-x86_64.7z)并解压到 `$HOME/.cache/electron-builder/fpm/fpm-1.9.3-2.3.1-linux-x86_64/` 中.
 > [fpm来源](https://github.com/electron-userland/electron-builder-binaries/releases/tag/fpm-1.9.3-2.3.1-linux-x86_64)
 

@@ -22,11 +22,20 @@
       "main.js"
     ],
     "artifactName": "${name}.${ext}",
+    "deb": {
+      "depends": [
+        "libnotify4",
+        "libxtst6",
+        "libnss3"
+      ]
+    },
     "linux": {
-      "category": "Network.P2P",
+      "category": "Network;P2P",
+      "desktop": {
+        "StartupWMClass": "Signal"
+      },
       "target": [
-        "deb",
-        "rpm"
+        "deb"
       ],
       "icon": "build/assets",
       "executableName": "po-long"
@@ -58,7 +67,7 @@
     "win": "electron-builder --publish=never --win"
   },
   "devDependencies": {
-    "electron": "^13.1.8",
+    "electron": "^14.0.0",
     "electron-builder": "^22.11.7"
   },
   "dependencies": {
