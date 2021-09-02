@@ -27,13 +27,11 @@
         "libnotify4",
         "libxtst6",
         "libnss3"
-      ]
+      ],
+      "afterInstall": "after-install.tpl"
     },
     "linux": {
       "category": "Network;P2P",
-      "desktop": {
-        "StartupWMClass": "Signal"
-      },
       "target": [
         "deb"
       ],
