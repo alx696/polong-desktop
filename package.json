@@ -33,7 +33,8 @@
     "linux": {
       "category": "Network;P2P",
       "target": [
-        "deb"
+        "deb",
+        "rpm"
       ],
       "icon": "build/assets",
       "executableName": "po-long"

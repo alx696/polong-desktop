@@ -55,7 +55,7 @@ npm test
 ```
 export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
-#sudo apt install -y rpm
+sudo apt install -y rpm
 yarn --verbose && yarn linux
 ```
 > [参考](https://www.electron.build/#quick-setup-guide)
