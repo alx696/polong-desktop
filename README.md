@@ -32,7 +32,6 @@ export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
 yarn --verbose
 ```
-> 首次执行时要相当长的时间，会一直停在`[-/2] waiting...`. 直到生成了yarn.lock文件, 才算完成.
 
 #### 启动调试
 
@@ -50,14 +49,13 @@ npm test
 
 注意: Debian中, 使用默认配置打的deb包在安装时会提示缺少依赖 `libappindicator3-1` , [参考默认配置](https://www.electron.build/configuration/linux#debian-package-options) 及 [配置示例](https://github.com/hiqua/Signal-Desktop/blob/d240b21d79fe19fb94f5287dd821179b32aa4223/package.json#L340) , 在package.json中明确 `depends` 为 `["libnotify4", "libxtst6", "libnss3"]` 可以解决依赖问题. 另外一个问题时安装完毕之后会提示 `/var/lib/dpkg/info/polong.postinst:行10: update-desktop-database：未找到命令` (好像不影响使用), <del>[没有找到解决方法](https://github.com/signalapp/Signal-Desktop/issues/3694) , 只能安装前手动安装支持命令的包 `apt-cache search update-desktop-database`</del> 在package.json中明确 `afterInstall` 为自己修改的 `after-install.tpl` (去除update-desktop-database操作) 后可以解决问题.
 
-[下载镜像 fpm-1.9.3-2.3.1-linux-x86_64.7z](https://xm.lilu.red:444/soft/fpm-1.9.3-2.3.1-linux-x86_64.7z)并解压到 `$HOME/.cache/electron-builder/fpm/fpm-1.9.3-2.3.1-linux-x86_64/` 中.
-> [fpm来源](https://github.com/electron-userland/electron-builder-binaries/releases/tag/fpm-1.9.3-2.3.1-linux-x86_64)
+[下载fpm-1.9.3-2.3.1-linux-x86_64.7z](https://github.com/electron-userland/electron-builder-binaries/releases/tag/fpm-1.9.3-2.3.1-linux-x86_64) 并解压到 `$HOME/.cache/electron-builder/fpm/fpm-1.9.3-2.3.1-linux-x86_64/` 中.
 
 项目根目录中执行：
 ```
 export ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 export ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron-builder-binaries/
-sudo apt install -y rpm
+#sudo apt install -y rpm
 yarn --verbose && yarn linux
 ```
 > [参考](https://www.electron.build/#quick-setup-guide)
